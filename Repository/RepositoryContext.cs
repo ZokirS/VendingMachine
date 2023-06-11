@@ -19,7 +19,7 @@ namespace Repository
             modelBuilder.ApplyConfiguration(new AdminConfiguration());
         }
 
-        public DbSet<Beverage>? Beverages { get; set; }
-        public DbSet<Coin>? Coins { get; set; }
+        public DbSet<Beverage> Beverages { get; set; }
+        public DbSet<Coin> Coins { get; set; }
     }
 }

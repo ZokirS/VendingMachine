@@ -12,14 +12,11 @@ namespace Repository
             throw new NotImplementedException();
         }
 
-        public VendingMachine GetVendingMachineModel()
-        {
-            throw new NotImplementedException();
-        }
+        public VendingMachine GetVendingMachineModel(bool trackChanges)
+        => FindAll(trackChanges).FirstOrDefault();
 
         public void InsertCoin(int coin)
         {
-            throw new NotImplementedException();
         }
 
         public OperationResult SelectBeverage(string beverageId)
