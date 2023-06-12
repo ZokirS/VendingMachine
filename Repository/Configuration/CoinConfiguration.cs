@@ -13,25 +13,25 @@ namespace Repository.Configuration
                 {
                     Id = 1,
                     Value = 1,
-                    IsBlocked = false,
+                    Available = true,
                 },
                 new Coin
                 {
                     Id = 2,
                     Value = 2,
-                    IsBlocked = false
+                    Available = true
                 },
                 new Coin
                 {
                     Id = 3,
                     Value = 5,
-                    IsBlocked = false
+                    Available = true
                 },
                 new Coin
                 {
                     Id = 4,
                     Value = 10,
-                    IsBlocked = false
+                    Available = true
                 });
         }
     }

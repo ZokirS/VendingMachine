@@ -26,7 +26,13 @@ namespace Repository
             SaveChanges();
         }
 
-        public ICollection<Coin> GetAllCoins()
+        public IEnumerable<Coin> GeAvaliabletCoins()
+        {
+            var coins = _context.Coins.Where(c=>c.Available);
+            return coins;
+        }
+
+        public IEnumerable<Coin> GetAllCoins()
             => _context.Coins.ToList();
         
         public Coin GetCoin(int coinId)
@@ -46,10 +52,60 @@ namespace Repository
             SaveChanges();
         }
 
-        public ICollection<Coin> Surrender(ICollection<Coin> inputCoins, ICollection<Beverage> beverages)
+        public IEnumerable<Coin> Surrender(IEnumerable<Coin> inputCoins, IEnumerable<Beverage> beverages)
         {
-            throw new NotImplementedException();
+            // Calculate the total value of the input coins
+            int inputTotal = inputCoins.Sum(coin => coin.Value * coin.Count);
+
+            // Calculate the total price of the selected beverages
+            var beveragesTotal = beverages.Sum(beverage => beverage.Price);
+
+            // Calculate the change to be returned
+            int change = inputTotal - (int)beveragesTotal;
+
+            if (change < 0)
+            {
+                // Insufficient funds, return an empty collection
+                return new List<Coin>();
+            }
+
+            // Create a list to hold the surrendered coins
+            List<Coin> surrenderedCoins = new List<Coin>();
+
+            // Iterate through the input coins in descending order of Value
+            foreach (Coin inputCoin in inputCoins.OrderByDescending(coin => coin.Value))
+            {
+                int quantityToSurrender = Math.Min(change / inputCoin.Value, inputCoin.Count);
+
+                if (quantityToSurrender > 0)
+                {
+                    // Add the surrendered coins to the list
+                    surrenderedCoins.Add(new Coin
+                    {
+                        Value = inputCoin.Value,
+                        Count = quantityToSurrender
+                    });
+
+                    // Update the change amount
+                    change -= quantityToSurrender * inputCoin.Value;
+                }
+
+                if (change == 0)
+                {
+                    // No more change to give, exit the loop
+                    break;
+                }
+            }
+
+            return surrenderedCoins;
         }
+
+        public void UpdateCoin(Coin coin)
+        {
+            _context.Update(coin);
+            SaveChanges();
+        }
+
         private void SaveChanges() => _context.SaveChanges();
         
     }
