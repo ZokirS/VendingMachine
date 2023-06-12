@@ -13,13 +13,13 @@ namespace Repository.Configuration
                 {
                     Id = 1,
                     Name = "Coca-Cola",
-                    Price = 1.5m
+                    Price = 10m
                 },
                 new Beverage
                 {
                     Id = 2,
                     Name = "Pepsi",
-                    Price = 1.2m
+                    Price = 12m
                 });
         }
     }

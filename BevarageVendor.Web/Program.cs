@@ -1,8 +1,29 @@
+using Contracts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Repository;
+using Service;
+using Service.Contracts;
+using Repository.Configuration;
+using Microsoft.AspNetCore.Identity;
+using Entities.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ICoinRepository, CoinRepository>();
+builder.Services.AddScoped<IBeverageRepository, BeverageRepository>();
+builder.Services.AddScoped<ICoinService, CoinService>();
+builder.Services.AddScoped<IBeverageService, BeverageService>();
+builder.Services.AddDbContextPool<RepositoryContext>(opt =>
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
 
+builder.Services.AddIdentity<User, IdentityRole>(o =>
+{
+    o.Password.RequiredLength = 10;
+}).AddEntityFrameworkStores<RepositoryContext>();
+builder.Services.AddAutoMapper(typeof(Program));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

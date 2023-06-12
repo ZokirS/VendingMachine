@@ -1,0 +1,105 @@
+﻿@using Shared.ViewModels;
+@model VendingMachineViewModel
+
+<h2>Vending Machine</h2>
+
+<div>
+    <h3>Beverages</h3>
+    <ul>
+        @foreach (var beverage in Model.Beverages)
+        {
+            <li>
+                <div>
+                    <strong>@beverage.Name</strong> - @beverage.Price Rubles
+                </div>
+                <div>
+                    <img src="@beverage.ImageUrl" alt="@beverage.Name" />
+                </div>
+                <div>
+                    <button class="beverageButton" data-id="@beverage.Id">Buy</button>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+<div>
+    <h3>Coins</h3>
+    <ul>
+        @foreach (var coin in Model.Coins)
+        {
+            <li>
+                <button class="coinButton" data-value="@coin.Value">@coin.Value Rubles</button>
+            </li>
+        }
+    </ul>
+</div>
+
+<div>
+    <h3>Selected Beverage</h3>
+    <div id="selectedBeverage"></div>
+</div>
+
+<div>
+    <h3>Surrender Amount</h3>
+    <div id="surrenderAmount"></div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            var selectedCoins = [];
+            var selectedBeverageId = null;
+
+            // Handle click event for coin buttons
+            $(".coinButton").click(function () {
+                var coinValue = parseInt($(this).data("value"));
+                selectedCoins.push(coinValue);
+            });
+
+            // Handle click event for beverage buttons
+            $(".beverageButton").click(function () {
+                // Remove the active class from all buttons
+                $(".beverageButton").removeClass("active");
+
+                // Add the active class to the selected button
+                $(this).addClass("active");
+
+                // Get the selected beverage id from the data-id attribute
+                selectedBeverageId = parseInt($(this).data("id"));
+            });
+
+            // Handle click event for purchase button
+            $("#purchaseButton").click(function () {
+                if (selectedCoins.length === 0 || selectedBeverageId === null) {
+                    alert("Please select coins and a beverage");
+                    return;
+                }
+
+                // Call the PurchaseBeverage action using AJAX
+                $.ajax({
+                    url: "@Url.Action("PurchaseBeverage", "VendingMachine")",
+                    type: "POST",
+                    data: {
+                        coinValues: selectedCoins,
+                        beverageId: selectedBeverageId
+                    },
+                    success: function (data) {
+                        // Process the returned data and update the UI
+                        var selectedBeverage = data.SelectedBeverage;
+                        var surrenderAmount = data.SurrenderAmount;
+
+                        // Update the UI with the selected beverage and surrender amount
+                        $("#selectedBeverage").text("Selected Beverage: " + selectedBeverage.Name);
+                        $("#surrenderAmount").text("Surrender Amount: " + surrenderAmount + " Rubles");
+
+                        alert("Purchase completed successfully");
+                    },
+                    error: function () {
+                        alert("Error occurred during purchase");
+                    }
+                });
+            });
+        });
+    </script>
+}

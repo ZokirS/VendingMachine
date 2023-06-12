@@ -7,9 +7,9 @@ namespace Service.Contracts
     {
         IEnumerable<CoinDto> GetAllCoins();
         CoinDto GetCoinById(int coinId);
-        void AddCoin(CoinDto coin);
-        void UpdateCoin(CoinDto coin);
-        void SubtractCoin(int coinId);
+        void AddCoin(int coinId, int count);
+        void UpdateCoin(int coinId);
+        void SubtractCoin(int coinId, int count);
         IEnumerable<CoinDto> GetAvailableCoins();
         IEnumerable<CoinDto> Surrender(IEnumerable<CoinDto> coinList, IEnumerable<BeverageDto> beverages);
     }

@@ -8,6 +8,20 @@ namespace Repository
         private readonly RepositoryContext _context;
         public BeverageRepository(RepositoryContext context) 
             => _context = context;
+
+        public void AddBeverages(IEnumerable<Beverage> beverages)
+        {
+            foreach (var newBeverage in beverages)
+            {
+                var beverage = _context.Beverages.FirstOrDefault(b=>b.Id == newBeverage.Id);
+                if (beverage != null)
+                {
+                    beverage.Count += newBeverage.Count; 
+                }
+            }
+            SaveChanges();
+        }
+
         public void CreateBeverage(Beverage beverage)
         {
             _context.Beverages.Add(beverage);
@@ -20,16 +34,28 @@ namespace Repository
             SaveChanges();
         }
 
+        public IEnumerable<Beverage> GetAvaliableBeverages()
+        => _context.Beverages.Where(b => b.Count > 0);
+
         public Beverage GetBeverageById(int id)
         {
             var beverage = _context.Beverages.FirstOrDefault(b=>b.Id == id);
             return beverage ?? throw new Exception();
         }
 
-        public ICollection<Beverage> GetBeverages()
+        public IEnumerable<Beverage> GetBeverages()
+             => _context.Beverages;
+
+        public void SubtractBeverages(IEnumerable<Beverage> beverages)
         {
-            var beverages = _context.Beverages.ToList();
-            return beverages;
+            foreach (var newBeverage in beverages)
+            {
+                var beverage = _context.Beverages.FirstOrDefault(b => b.Id == newBeverage.Id);
+                if (beverage != null)
+                {
+                    beverage.Count -= newBeverage.Count;
+                }
+            }
         }
 
         public void UpdateBeverage(Beverage beverage)

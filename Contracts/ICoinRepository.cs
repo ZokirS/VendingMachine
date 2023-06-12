@@ -5,7 +5,7 @@ namespace Contracts
     public interface ICoinRepository
     {
         void AddCoinToMachine(int coinId, int count);
-        void SubtractCointFromMachine(Coin coin);
+        void SubtractCointFromMachine(int coinId, int count);
         void CreateCoin(Coin coin);
         IEnumerable<Coin> Surrender(IEnumerable<Coin> inputCoins, IEnumerable<Beverage> beverages);
         IEnumerable<Coin> GetAllCoins();

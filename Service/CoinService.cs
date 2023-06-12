@@ -16,17 +16,15 @@ namespace Service
             _repository = repository;
             _mapper = mapper;
         }
-        public void AddCoin(CoinDto coin)
+        public void AddCoin(int coinId, int count)
         {
-            var coinEntity = _mapper.Map<Coin>(coin);
-            _repository.AddCoinToMachine(coinEntity.Id, coinEntity.Count);
+            var coinEntity = _repository.GetCoin(coinId);
+            _repository.AddCoinToMachine(coinEntity.Id, count);
         }
 
-        public void SubtractCoin(int coinId)
-        {
-            var coin = _repository.GetCoin(coinId);
-            _repository.SubtractCointFromMachine(coin);
-        }
+        public void SubtractCoin(int coinId, int count)
+        => _repository.SubtractCointFromMachine(coinId, count);
+        
 
         public IEnumerable<CoinDto> GetAllCoins()
         {
@@ -48,9 +46,9 @@ namespace Service
             return _mapper.Map<CoinDto>(coin);
         }
 
-        public void UpdateCoin(CoinDto coin)
+        public void UpdateCoin(int coinId)
         {
-            var coinEntity = _mapper.Map<Coin>(coin);
+            var coinEntity = _repository.GetCoin(coinId);
             _repository.UpdateCoin(coinEntity);
         }
 

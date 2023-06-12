@@ -42,12 +42,12 @@ namespace Repository
             return coin;
         }
 
-        public void SubtractCointFromMachine(Coin coin)
+        public void SubtractCointFromMachine(int coinId, int count)
         {
-            var coinToSubtract = _context.Coins.FirstOrDefault(c => c.Id == coin.Id)
+            var coinToSubtract = _context.Coins.FirstOrDefault(c => c.Id == coinId)
                 ?? throw new Exception();
 
-            coinToSubtract.Count = coinToSubtract.Count - coin.Count;
+            coinToSubtract.Count = coinToSubtract.Count - count;
             _context.Coins.Update(coinToSubtract);
             SaveChanges();
         }

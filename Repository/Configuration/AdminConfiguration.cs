@@ -1,39 +1,44 @@
 ﻿using Entities.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Repository.Configuration
 {
-    public class AdminConfiguration : IEntityTypeConfiguration<User>
+    public static class AdminConfiguration
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public static async Task Initialize(IServiceCollection services)
         {
-            builder.HasData(
-                new IdentityRole
+            using (var serviceProvider = services.BuildServiceProvider())
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
+
+                // Seed roles
+                if (!await roleManager.RoleExistsAsync("Admin"))
                 {
-                    Id = "1",
-                    Name = "Administrator",
-                    NormalizedName = "ADMINISTRATOR",
-                });
-            var hasher = new PasswordHasher<User>();
-            builder.HasData(
-                new User
+                    await roleManager.CreateAsync(new Role("Admin"));
+                }
+
+                // Seed admin user
+                var adminUser = new User
                 {
-                    Id = "1",
-                    UserName = "admin",
-                    NormalizedUserName = "ADMIN",
-                    Email = "admin@example.com",
-                    NormalizedEmail = "ADMIN@EXAMPLE.COM",
-                    EmailConfirmed = true,
-                    PasswordHash = hasher.HashPassword(null, "P@ssw0rd")
-                });
-            builder.HasData(
-                new IdentityUserRole<string>
+                    UserName = "admin@example.com",
+                    Email = "admin@example.com"
+                    // Set other properties of the admin user
+                };
+
+                var password = "AdminPassword123"; // Set the desired password
+
+                if (await userManager.FindByEmailAsync(adminUser.Email) == null)
                 {
-                    RoleId = "1",
-                    UserId = "1",
-                });
+                    var result = await userManager.CreateAsync(adminUser, password);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(adminUser, "Admin");
+                    }
+                }
+            }
         }
     }
 }
