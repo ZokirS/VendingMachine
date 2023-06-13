@@ -5,17 +5,17 @@ namespace Repository
     public sealed class RepositoryManager : IRepositoryManager
     {
         private readonly RepositoryContext _context;
-        private readonly Lazy<IVendingMachineRepository> _vendingMachine;
-        private readonly Lazy<IAdminRepository> _adminRepository;
+        private readonly Lazy<IBeverageRepository> _beverageRepository;
+        private readonly Lazy<ICoinRepository> _coinRepository;
 
         public RepositoryManager(RepositoryContext context)
         {
             _context = context;
-            _vendingMachine = new Lazy<IVendingMachineRepository>(() => new VendingMachineRepository(context));
-            _adminRepository = new Lazy<IAdminRepository>(() => new AdminRepository(context));
+            _beverageRepository = new Lazy<IBeverageRepository>(() => new BeverageRepository(context));
+            _coinRepository = new Lazy<ICoinRepository>(() => new CoinRepository(context));
         }
-        public IVendingMachineRepository VendingMachine => _vendingMachine.Value;
-        public IAdminRepository Admin => _adminRepository.Value;
+        public IBeverageRepository Beverage => _beverageRepository.Value;
+        public ICoinRepository Coin => _coinRepository.Value;
 
         public void Save() => _context.SaveChanges();
     }

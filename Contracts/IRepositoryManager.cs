@@ -2,8 +2,8 @@
 {
     public interface IRepositoryManager
     {
-        IVendingMachineRepository VendingMachine { get; }
-        IAdminRepository Admin { get; }
+        public IBeverageRepository Beverage { get; }
+        public ICoinRepository Coin { get; }
         void Save();
     }
 }

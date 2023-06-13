@@ -16,6 +16,8 @@ builder.Services.AddScoped<ICoinRepository, CoinRepository>();
 builder.Services.AddScoped<IBeverageRepository, BeverageRepository>();
 builder.Services.AddScoped<ICoinService, CoinService>();
 builder.Services.AddScoped<IBeverageService, BeverageService>();
+builder.Services.AddScoped<IServiceManager, ServiceManager>();
+builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddDbContextPool<RepositoryContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
 
@@ -43,6 +45,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=VendingMachine}/{action=Index}/{id?}");
 
 app.Run();

@@ -55,7 +55,7 @@ namespace Repository.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
                     Count = table.Column<int>(type: "int", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -193,15 +193,15 @@ namespace Repository.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "bad6ad47-007f-4627-8fcd-bfd9e3c15db5", "admin@gmail.com", false, false, null, null, null, null, "1234567890", false, "9a0ac396-b211-403f-a499-98173515102a", false, "Admin" });
+                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "1cab35d3-7de2-4a77-9369-3108f8e0d3ca", "admin@gmail.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEP3Zxxxj9RYHs0GxxrOS+DBeM3VPlJoSelGUVkmTIrUYszFVL9rl2HSLEi33vk2tjg==", "1234567890", false, "266aa303-6735-4042-80fa-e5257b865394", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Beverages",
                 columns: new[] { "Id", "Count", "ImageUrl", "Name", "Price" },
                 values: new object[,]
                 {
-                    { 1, 0, null, "Coca-Cola", 1.5m },
-                    { 2, 0, null, "Pepsi", 1.2m }
+                    { 1, 0, null, "Coca-Cola", 10 },
+                    { 2, 0, null, "Pepsi", 12 }
                 });
 
             migrationBuilder.InsertData(
@@ -209,10 +209,10 @@ namespace Repository.Migrations
                 columns: new[] { "Id", "Available", "Count", "Value" },
                 values: new object[,]
                 {
-                    { 1, true, 0, 1 },
-                    { 2, true, 0, 2 },
-                    { 3, true, 0, 5 },
-                    { 4, true, 0, 10 }
+                    { 1, true, 10, 1 },
+                    { 2, true, 10, 2 },
+                    { 3, true, 10, 5 },
+                    { 4, true, 10, 10 }
                 });
 
             migrationBuilder.InsertData(

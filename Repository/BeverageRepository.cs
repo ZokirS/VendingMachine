@@ -44,7 +44,7 @@ namespace Repository
         }
 
         public IEnumerable<Beverage> GetBeverages()
-             => _context.Beverages;
+             => _context.Beverages.ToList();
 
         public void SubtractBeverages(IEnumerable<Beverage> beverages)
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entities.Models;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using Shared.ViewModels;
@@ -7,20 +8,18 @@ namespace VendingMachine.Web.Controllers
 {
     public class VendingMachineController : Controller
     {
-        private readonly IBeverageService _beverageService;
-        private readonly ICoinService _coinService;
+        private readonly IServiceManager _serviceManager;
 
-        public VendingMachineController(IBeverageService beverageService, ICoinService coinService)
+        public VendingMachineController(IServiceManager serviceManager)
         {
-            _beverageService = beverageService;
-            _coinService = coinService;
+            _serviceManager = serviceManager;
         }
 
         public IActionResult Index()
         {
             // Get the available beverages and coins from the services
-            IEnumerable<BeverageDto> beverages = _beverageService.GetAvailableBeverages();
-            IEnumerable<CoinDto> coins = _coinService.GetAvailableCoins();
+            IEnumerable<BeverageDto> beverages = _serviceManager.BeverageService.GetAllBeverages();
+            IEnumerable<CoinDto> coins = _serviceManager.CoinService.GetAvailableCoins();
 
             // Create a model to pass to the view
             var model = new VendingMachineViewModel
@@ -33,32 +32,43 @@ namespace VendingMachine.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult PurchaseBeverage(int[] coinValues, int beverageId)
+        public IActionResult Purchase(int selectedBeverageId,  int[] coinsData)
         {
-            // Calculate the total value of the provided coins
-            int totalCoinValue = coinValues.Sum();
+            var beverage = _serviceManager.BeverageService.GetBeverageById(selectedBeverageId);
 
-            // Get the selected beverage by id
-            BeverageDto selectedBeverage = _beverageService.GetBeverageById(beverageId);
+            var totalFundsRequired = beverage.Price;
 
-            // Check if a valid beverage is available
-            if (selectedBeverage == null)
+           // var totalFundsProvided = coinsData.Sum(c => c.Value * c.Count);
+
+            if (0 >= totalFundsRequired)
             {
-                return BadRequest("Invalid beverage selection");
+
+                return Json(new { success = true, message = "Purchase successful." });
             }
-
-            // Calculate the surrender amount
-            int surrenderAmount = totalCoinValue - (int)selectedBeverage.Price;
-
-            // Prepare the data to be returned
-            var result = new
+            else
             {
-                SelectedBeverage = selectedBeverage,
-                SurrenderAmount = surrenderAmount
-            };
-
-            // Return the data as a JSON result
-            return Json(result);
+                return Json(new { success = false, message = "Insufficient funds for the selected beverage." });
+            }
         }
+       /*
+        [HttpPost]
+        public IActionResult Purchase(VendingMachineResponseViewModel viewModel)
+        {
+            var beverage = _serviceManager.BeverageService.GetBeverageById(viewModel.Beverage.Id);
+
+            var totalFundsRequired = beverage.Price;
+            var coinCounts = viewModel.Coins;
+            var totalFundsProvided = coinCounts.Sum(c => c.Value * c.Count);
+
+            if (totalFundsProvided >= totalFundsRequired)
+            {
+
+                return Json(new { success = true, message = "Purchase successful." });
+            }
+            else
+            {
+                return Json(new { success = false, message = "Insufficient funds for the selected beverage." });
+            }
+        }*/
     }
 }

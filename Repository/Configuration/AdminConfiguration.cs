@@ -1,44 +1,52 @@
 ﻿using Entities.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Repository.Configuration
 {
-    public static class AdminConfiguration
+    public class AdminConfiguration : IEntityTypeConfiguration<User>
     {
-        public static async Task Initialize(IServiceCollection services)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
-            using (var serviceProvider = services.BuildServiceProvider())
-            using (var scope = serviceProvider.CreateScope())
+            PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
+            builder.HasData(new User
             {
-                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
-
-                // Seed roles
-                if (!await roleManager.RoleExistsAsync("Admin"))
+                Id = "b74ddd14-6340-4840-95c2-db12554843e5",
+                UserName = "Admin",
+                Email = "admin@gmail.com",
+                LockoutEnabled = false,
+                PhoneNumber = "1234567890",
+                PasswordHash = passwordHasher.HashPassword(null, "Admin*123")
+            });
+        }
+    }
+    public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
+    {
+        public void Configure(EntityTypeBuilder<IdentityRole> builder)
+        {
+            builder.HasData(
+                new IdentityRole
                 {
-                    await roleManager.CreateAsync(new Role("Admin"));
-                }
+                    Id = "fab4fac1-c546-41de-aebc-a14da6895711",
+                    Name = "Admin",
+                    ConcurrencyStamp = "1",
+                    NormalizedName = "Admin"
+                });
+        }
+    }
 
-                // Seed admin user
-                var adminUser = new User
+    public class UserRoleConfiguraion : IEntityTypeConfiguration<IdentityUserRole<string>>
+    {
+        public void Configure(EntityTypeBuilder<IdentityUserRole<string>> builder)
+        {
+            builder.HasData(
+                new IdentityUserRole<string>
                 {
-                    UserName = "admin@example.com",
-                    Email = "admin@example.com"
-                    // Set other properties of the admin user
-                };
-
-                var password = "AdminPassword123"; // Set the desired password
-
-                if (await userManager.FindByEmailAsync(adminUser.Email) == null)
-                {
-                    var result = await userManager.CreateAsync(adminUser, password);
-                    if (result.Succeeded)
-                    {
-                        await userManager.AddToRoleAsync(adminUser, "Admin");
-                    }
-                }
-            }
+                    RoleId = "fab4fac1-c546-41de-aebc-a14da6895711",
+                    UserId = "b74ddd14-6340-4840-95c2-db12554843e5"
+                });
         }
     }
 }

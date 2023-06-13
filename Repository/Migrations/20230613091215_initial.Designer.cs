@@ -12,7 +12,7 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20230612122918_initial")]
+    [Migration("20230613091215_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,9 +42,8 @@ namespace Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -56,14 +55,14 @@ namespace Repository.Migrations
                             Id = 1,
                             Count = 0,
                             Name = "Coca-Cola",
-                            Price = 1.5m
+                            Price = 10
                         },
                         new
                         {
                             Id = 2,
                             Count = 0,
                             Name = "Pepsi",
-                            Price = 1.2m
+                            Price = 12
                         });
                 });
 
@@ -93,28 +92,28 @@ namespace Repository.Migrations
                         {
                             Id = 1,
                             Available = true,
-                            Count = 0,
+                            Count = 10,
                             Value = 1
                         },
                         new
                         {
                             Id = 2,
                             Available = true,
-                            Count = 0,
+                            Count = 10,
                             Value = 2
                         },
                         new
                         {
                             Id = 3,
                             Available = true,
-                            Count = 0,
+                            Count = 10,
                             Value = 5
                         },
                         new
                         {
                             Id = 4,
                             Available = true,
-                            Count = 0,
+                            Count = 10,
                             Value = 10
                         });
                 });
@@ -188,13 +187,14 @@ namespace Repository.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bad6ad47-007f-4627-8fcd-bfd9e3c15db5",
+                            ConcurrencyStamp = "1cab35d3-7de2-4a77-9369-3108f8e0d3ca",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAEP3Zxxxj9RYHs0GxxrOS+DBeM3VPlJoSelGUVkmTIrUYszFVL9rl2HSLEi33vk2tjg==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9a0ac396-b211-403f-a499-98173515102a",
+                            SecurityStamp = "266aa303-6735-4042-80fa-e5257b865394",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });

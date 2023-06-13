@@ -14,24 +14,28 @@ namespace Repository.Configuration
                     Id = 1,
                     Value = 1,
                     Available = true,
+                    Count = 10,
                 },
                 new Coin
                 {
                     Id = 2,
                     Value = 2,
-                    Available = true
+                    Available = true,
+                    Count = 10,
                 },
                 new Coin
                 {
                     Id = 3,
                     Value = 5,
-                    Available = true
+                    Available = true,
+                    Count = 10,
                 },
                 new Coin
                 {
                     Id = 4,
                     Value = 10,
-                    Available = true
+                    Available = true,
+                    Count = 10,
                 });
         }
     }
