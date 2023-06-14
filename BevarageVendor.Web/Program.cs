@@ -7,6 +7,7 @@ using Service.Contracts;
 using Repository.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Entities.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,11 +21,20 @@ builder.Services.AddScoped<IServiceManager, ServiceManager>();
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddDbContextPool<RepositoryContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
-
+//builder.Services.coo
 builder.Services.AddIdentity<User, IdentityRole>(o =>
 {
-    o.Password.RequiredLength = 10;
-}).AddEntityFrameworkStores<RepositoryContext>();
+    o.Password.RequireDigit = false;
+    o.Password.RequireLowercase = false;
+    o.Password.RequireUppercase = false;
+    o.Password.RequireNonAlphanumeric = false;
+    o.User.RequireUniqueEmail = true;
+})
+.AddEntityFrameworkStores<RepositoryContext>()
+.AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication();
+
 builder.Services.AddAutoMapper(typeof(Program));
 var app = builder.Build();
 

@@ -137,6 +137,12 @@ namespace Repository.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -187,16 +193,35 @@ namespace Repository.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4fb58717-0175-4d87-bbe7-519684c11449",
+                            ConcurrencyStamp = "927db2a8-fb3d-4b8c-82b5-952967ee0073",
                             Email = "admin@gmail.com",
-                            EmailConfirmed = false,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEGK1J+QabJ8xG7ffy3VmWu3R7nzafr0WKYVC+ggjkJm5ZS+pGRfcUcfAz0BK7PodsA==",
+                            NormalizedEmail = "admin@gmail.com",
+                            NormalizedUserName = "Admin",
+                            PasswordHash = "AQAAAAEAACcQAAAAELH87GPGJFN6jOzfnKX0KGi5yluC400wV7kDW8NYdYyJ26gdVj5KQhCS2my0Z8noqg==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "79f89e56-495a-4fe6-8905-574abbeb7a6c",
+                            SecurityStamp = "3b4fa0cb-394a-43e3-9148-d781a47c8b3d",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "b421e928-0613-9ebd-a64c-f10b6a706e73",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "760bcd60-4912-4dff-81ab-bd829616e40e",
+                            Email = "adam@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "adam@gmail.com",
+                            NormalizedUserName = "user",
+                            PasswordHash = "AQAAAAEAACcQAAAAEArxdAA7VrYIKFSYoyTUedCObXL0WomyfKuCaW50WIg5e5thJTo2487h6mESW2TFQg==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "2f2d51ac-4565-425a-b958-41dc81576e68",
+                            TwoFactorEnabled = false,
+                            UserName = "user"
                         });
                 });
 
@@ -231,8 +256,8 @@ namespace Repository.Migrations
                         {
                             Id = "fab4fac1-c546-41de-aebc-a14da6895711",
                             ConcurrencyStamp = "1",
-                            Name = "Admin",
-                            NormalizedName = "Admin"
+                            Name = "ADMINISTRATOR",
+                            NormalizedName = "ADMINISTRATOR"
                         });
                 });
 
@@ -326,6 +351,11 @@ namespace Repository.Migrations
                         new
                         {
                             UserId = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            RoleId = "fab4fac1-c546-41de-aebc-a14da6895711"
+                        },
+                        new
+                        {
+                            UserId = "b421e928-0613-9ebd-a64c-f10b6a706e73",
                             RoleId = "fab4fac1-c546-41de-aebc-a14da6895711"
                         });
                 });

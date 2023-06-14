@@ -12,8 +12,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20230613091215_initial")]
-    partial class initial
+    [Migration("20230614121952_IdentityMigration")]
+    partial class IdentityMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,14 +53,16 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1,
-                            Count = 0,
+                            Count = 10,
+                            ImageUrl = "https://images.unsplash.com/photo-1561758033-48d52648ae8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80.jpg",
                             Name = "Coca-Cola",
                             Price = 10
                         },
                         new
                         {
                             Id = 2,
-                            Count = 0,
+                            Count = 10,
+                            ImageUrl = "https://images.unsplash.com/photo-1531384370597-8590413be50a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80.jpg",
                             Name = "Pepsi",
                             Price = 12
                         });
@@ -137,6 +139,12 @@ namespace Repository.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -187,14 +195,16 @@ namespace Repository.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1cab35d3-7de2-4a77-9369-3108f8e0d3ca",
+                            ConcurrencyStamp = "bdad737c-3d1a-4876-8024-6c459e3f58a1",
                             Email = "admin@gmail.com",
-                            EmailConfirmed = false,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEP3Zxxxj9RYHs0GxxrOS+DBeM3VPlJoSelGUVkmTIrUYszFVL9rl2HSLEi33vk2tjg==",
+                            NormalizedEmail = "admin@gmail.com",
+                            NormalizedUserName = "Admin",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH4zh7aJDBkK9cY/S3MUBkNdKEwa8B3t9WpNYL4Ji0fJQfCZyZ6Z6LD85qDHrnlfeQ==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "266aa303-6735-4042-80fa-e5257b865394",
+                            SecurityStamp = "202a2eda-7cff-4446-b132-0d621fcbad8f",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -231,8 +241,8 @@ namespace Repository.Migrations
                         {
                             Id = "fab4fac1-c546-41de-aebc-a14da6895711",
                             ConcurrencyStamp = "1",
-                            Name = "Admin",
-                            NormalizedName = "Admin"
+                            Name = "ADMINISTRATOR",
+                            NormalizedName = "ADMINISTRATOR"
                         });
                 });
 

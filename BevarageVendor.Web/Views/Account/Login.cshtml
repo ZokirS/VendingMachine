@@ -1,0 +1,27 @@
+﻿@model Shared.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Account Login";
+}
+
+<h2>Admin Login</h2>
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+
+    <div>
+        @Html.LabelFor(model => model.Email)
+        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", required = "required" })
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.Password)
+        @Html.PasswordFor(model => model.Password, new { @class = "form-control", required = "required" })
+    </div>
+
+    <div>
+        @Html.CheckBoxFor(model => model.RememberMe)
+        @Html.LabelFor(model => model.RememberMe)
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+}

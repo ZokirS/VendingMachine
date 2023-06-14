@@ -15,10 +15,24 @@ namespace Repository.Configuration
             {
                 Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                 UserName = "Admin",
+                NormalizedUserName = "Admin",
+                EmailConfirmed = true,
+                NormalizedEmail = "admin@gmail.com",
                 Email = "admin@gmail.com",
                 LockoutEnabled = false,
                 PhoneNumber = "1234567890",
-                PasswordHash = passwordHasher.HashPassword(null, "Admin*123")
+                PasswordHash = passwordHasher.HashPassword(null, "Qwerty1234!")
+            }, new User
+            {
+                Id = "b421e928-0613-9ebd-a64c-f10b6a706e73",
+                UserName = "user",
+                NormalizedUserName = "user",
+                EmailConfirmed = true,
+                NormalizedEmail = "adam@gmail.com",
+                Email = "adam@gmail.com",
+                LockoutEnabled = false,
+                PhoneNumber = "1234567890",
+                PasswordHash = passwordHasher.HashPassword(null, "Qwerty1234!")
             });
         }
     }
@@ -30,9 +44,9 @@ namespace Repository.Configuration
                 new IdentityRole
                 {
                     Id = "fab4fac1-c546-41de-aebc-a14da6895711",
-                    Name = "Admin",
+                    Name = "ADMINISTRATOR",
                     ConcurrencyStamp = "1",
-                    NormalizedName = "Admin"
+                    NormalizedName = "ADMINISTRATOR"
                 });
         }
     }
@@ -46,6 +60,11 @@ namespace Repository.Configuration
                 {
                     RoleId = "fab4fac1-c546-41de-aebc-a14da6895711",
                     UserId = "b74ddd14-6340-4840-95c2-db12554843e5"
+                }, 
+                new IdentityUserRole<string>
+                {
+                    RoleId = "fab4fac1-c546-41de-aebc-a14da6895711",
+                    UserId = "b421e928-0613-9ebd-a64c-f10b6a706e73"
                 });
         }
     }

@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "_Layout";
+}
+
+<h2>Welcome, Admin!</h2>
+
+<p><a asp-controller="Beverage" asp-action="Index">Beverages</a></p>
+@using(Html.BeginForm("Index", "Beverage", FormMethod.Get))
+{
+    <img src="https://www.packagingdigest.com/sites/packagingdigest.com/files/AdobeStock_279692163_Editorial_Use_Only-Beverage-FTR-new.jpg" height="200" width="200" />
+    <h2>Beverages</h2>
+}
+@using (Html.BeginForm("Index", "Coin", FormMethod.Get))
+{
+    <img src="https://www.joelscoins.com/images/russiaset8.jpg" height="200" width="200" />
+    <h2>Beverages</h2>
+}
+
+<a asp-action="Logout">Logout</a>

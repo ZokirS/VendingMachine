@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class initial : Migration
+    public partial class IdentityMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,6 +28,8 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -188,20 +190,20 @@ namespace Repository.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "fab4fac1-c546-41de-aebc-a14da6895711", "1", "Admin", "Admin" });
+                values: new object[] { "fab4fac1-c546-41de-aebc-a14da6895711", "1", "ADMINISTRATOR", "ADMINISTRATOR" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "1cab35d3-7de2-4a77-9369-3108f8e0d3ca", "admin@gmail.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEP3Zxxxj9RYHs0GxxrOS+DBeM3VPlJoSelGUVkmTIrUYszFVL9rl2HSLEi33vk2tjg==", "1234567890", false, "266aa303-6735-4042-80fa-e5257b865394", false, "Admin" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "bdad737c-3d1a-4876-8024-6c459e3f58a1", "admin@gmail.com", true, null, null, false, null, "admin@gmail.com", "Admin", "AQAAAAEAACcQAAAAEH4zh7aJDBkK9cY/S3MUBkNdKEwa8B3t9WpNYL4Ji0fJQfCZyZ6Z6LD85qDHrnlfeQ==", "1234567890", false, "202a2eda-7cff-4446-b132-0d621fcbad8f", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Beverages",
                 columns: new[] { "Id", "Count", "ImageUrl", "Name", "Price" },
                 values: new object[,]
                 {
-                    { 1, 0, null, "Coca-Cola", 10 },
-                    { 2, 0, null, "Pepsi", 12 }
+                    { 1, 10, "https://images.unsplash.com/photo-1561758033-48d52648ae8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80.jpg", "Coca-Cola", 10 },
+                    { 2, 10, "https://images.unsplash.com/photo-1531384370597-8590413be50a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80.jpg", "Pepsi", 12 }
                 });
 
             migrationBuilder.InsertData(

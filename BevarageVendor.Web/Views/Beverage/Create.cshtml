@@ -1,0 +1,17 @@
+﻿@model Shared.DataTransferObjects.BeverageDto
+
+<h2>Add Beverage</h2>
+
+<form asp-action="Create">
+    <div>
+        <label asp-for="Value">Value:</label>
+        <input asp-for="Value" />
+        <span asp-validation-for="Value"></span>
+    </div>
+    <div>
+        <label asp-for="Count">Count:</label>
+        <input asp-for="Count" />
+        <span asp-validation-for="Count"></span>
+    </div>
+    <button type="submit">Add Beverage</button>
+</form>

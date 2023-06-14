@@ -1,0 +1,27 @@
+﻿@using Shared.DataTransferObjects
+@model IEnumerable<CoinDto>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <!-- Add more columns as needed -->
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var beverage in Model)
+        {
+            <tr>
+                <td>@beverage.Value</td>
+                <td>@beverage.Available</td>
+                <td>@beverage.Count</td>
+                <!-- Add more columns as needed -->
+                <td>
+                    <a asp-action="Edit" asp-route-id="@beverage.Id">Edit</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
