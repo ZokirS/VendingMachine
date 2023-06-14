@@ -11,6 +11,6 @@ namespace Service.Contracts
         void UpdateCoin(int coinId);
         void SubtractCoin(int coinId, int count);
         IEnumerable<CoinDto> GetAvailableCoins();
-        IEnumerable<CoinDto> Surrender(IEnumerable<CoinDto> coinList, IEnumerable<BeverageDto> beverages);
+        IEnumerable<CoinDto> Surrender(int changeAmount);
     }
 }

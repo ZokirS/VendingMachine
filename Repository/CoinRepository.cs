@@ -52,52 +52,22 @@ namespace Repository
             SaveChanges();
         }
 
-        public IEnumerable<Coin> Surrender(IEnumerable<Coin> inputCoins, IEnumerable<Beverage> beverages)
+        public IEnumerable<Coin> Surrender(int changeAmount)
         {
-            // Calculate the total value of the input coins
-            int inputTotal = inputCoins.Sum(coin => coin.Value * coin.Count);
-
-            // Calculate the total price of the selected beverages
-            var beveragesTotal = beverages.Sum(beverage => beverage.Price);
-
-            // Calculate the change to be returned
-            int change = inputTotal - (int)beveragesTotal;
-
-            if (change < 0)
+            var coins = new List<Coin>();
+            while(changeAmount != 0)
             {
-                // Insufficient funds, return an empty collection
-                return new List<Coin>();
-            }
-
-            // Create a list to hold the surrendered coins
-            List<Coin> surrenderedCoins = new List<Coin>();
-
-            // Iterate through the input coins in descending order of Value
-            foreach (Coin inputCoin in inputCoins.OrderByDescending(coin => coin.Value))
-            {
-                int quantityToSurrender = Math.Min(change / inputCoin.Value, inputCoin.Count);
-
-                if (quantityToSurrender > 0)
+                var coin = _context.Coins.OrderByDescending(x => x.Value).FirstOrDefault(x=>x.Value <= changeAmount && x.Count>0);
+                coins.Add(new Coin
                 {
-                    // Add the surrendered coins to the list
-                    surrenderedCoins.Add(new Coin
-                    {
-                        Value = inputCoin.Value,
-                        Count = quantityToSurrender
-                    });
-
-                    // Update the change amount
-                    change -= quantityToSurrender * inputCoin.Value;
-                }
-
-                if (change == 0)
-                {
-                    // No more change to give, exit the loop
-                    break;
-                }
+                    Value = coin.Value,
+                    Count = 1
+                });
+                changeAmount -= coin.Value;
+                coin.Count--;
+                UpdateCoin(coin);
             }
-
-            return surrenderedCoins;
+            return coins;
         }
 
         public void UpdateCoin(Coin coin)

@@ -35,7 +35,7 @@ namespace Service
 
         public IEnumerable<CoinDto> GetAvailableCoins()
         {
-            var coins = _repository.GeAvaliabletCoins();
+            var coins = _repository.GeAvaliabletCoins().OrderBy(x=>x.Value);
             var coinsDto = _mapper.Map<IEnumerable<CoinDto>>(coins);
             return coinsDto;
         }
@@ -52,12 +52,9 @@ namespace Service
             _repository.UpdateCoin(coinEntity);
         }
 
-        public IEnumerable<CoinDto> Surrender(IEnumerable<CoinDto> coinList, IEnumerable<BeverageDto> beverages)
+        public IEnumerable<CoinDto> Surrender(int changeAmount)
         {
-            var coinsEntity = _mapper.Map<IEnumerable<Coin>>(coinList);
-            var beveragesEntity = _mapper.Map<IEnumerable<Beverage>>(beverages);
-
-            var coins = _repository.Surrender(coinsEntity, beveragesEntity);
+            var coins = _repository.Surrender(changeAmount);
             var coinsToReturn = _mapper.Map<IEnumerable<CoinDto>>(coins);
             return coinsToReturn;
         }

@@ -16,16 +16,18 @@ namespace Service
             _repository = repository;
             _mapper = mapper;
         }
-        public void AddBeverages(IEnumerable<BeverageDto> beverageDto)
+
+        public bool Addbeverage(int beverageId, int count)
         {
-            var beverageEntity = _mapper.Map<IEnumerable<Beverage>>(beverageDto);
-            _repository.AddBeverages(beverageEntity);
+            _repository.AddBeverage(beverageId, count);
+            return true;
         }
 
-        public void DeleteBeverage(int beverageId)
+        public bool DeleteBeverage(int beverageId)
         {
             var beverage = _repository.GetBeverageById(beverageId);
             _repository.DeleteBeverage(beverage);
+            return true;
         }
 
         public IEnumerable<BeverageDto> GetAllBeverages()
@@ -49,10 +51,17 @@ namespace Service
             return beverageToReturn;
         }
 
-        public void UpdateBeverage(BeverageDto beverageDto)
+        public bool SubtractBeverage(int beverageId)
+        {
+            _repository.SubtractBeverages(beverageId);
+            return true;
+        }
+
+        public bool UpdateBeverage(BeverageDto beverageDto)
         {
             var beverage = _mapper.Map<Beverage>(beverageDto);
             _repository.UpdateBeverage(beverage);
+            return true;
         }
     }
 }
